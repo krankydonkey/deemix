@@ -42,6 +42,7 @@ export const DEFAULT_SETTINGS: Settings = {
 	queueConcurrency: 10,
 	maxBitrate: TrackFormats.MP3_128,
 	feelingLucky: false,
+	downloadAlbumSingles: false,
 	fallbackBitrate: false,
 	fallbackSearch: false,
 	fallbackISRC: false,

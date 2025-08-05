@@ -61,6 +61,7 @@ export interface Settings {
 	illegalCharacterReplacer?: string;
 	queueConcurrency?: number;
 	maxBitrate?: number;
+	downloadAlbumSingles?: boolean;
 	fallbackBitrate?: boolean;
 	fallbackSearch?: boolean;
 	logErrors?: boolean;

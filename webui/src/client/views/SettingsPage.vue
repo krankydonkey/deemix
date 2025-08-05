@@ -990,6 +990,14 @@ function canDownload(bitrate: number) {
 				<div
 					class="settings-container__third settings-container__third--only-checkbox"
 				>
+
+					<label class="with-checkbox">
+						<input v-model="settings.downloadAlbumSingles" type="checkbox" />
+						<span class="checkbox-text">{{
+							t("settings.downloads.downloadAlbumSingles")
+						}}</span>
+					</label>
+
 					<label class="with-checkbox">
 						<input v-model="settings.fallbackBitrate" type="checkbox" />
 						<span class="checkbox-text">{{

@@ -18,7 +18,7 @@ const listener: Listener = {
 	},
 };
 
-export const downloadLinks = async (
+const initialLinks = async (
 	dz: Deezer,
 	urls: string[],
 	settings: Settings,
@@ -27,6 +27,7 @@ export const downloadLinks = async (
 	const bitrate = settings.maxBitrate ?? TrackFormats.MP3_128;
 
 	const downloadObjects = [];
+	const expandedObjects = [];
 	for (const url of urls) {
 		try {
 			const downloadObject = await generateDownloadObject(
@@ -36,7 +37,6 @@ export const downloadLinks = async (
 				{ spotify: spotifyPlugin },
 				listener
 			);
-
 			if (Array.isArray(downloadObject)) {
 				downloadObjects.concat(downloadObject);
 			} else {
@@ -58,6 +58,42 @@ export const downloadLinks = async (
 				console.error(e);
 			}
 		}
+	}
+	return downloadObjects
+}
+
+
+export const downloadLinks = async (
+	dz: Deezer,
+	urls: string[],
+	settings: Settings,
+	spotifyPlugin: SpotifyPlugin
+) => {
+	const initialObjects = await initialLinks(
+		dz,
+		urls,
+		settings,
+		spotifyPlugin
+	)
+	let downloadObjects = [];
+	if (settings.downloadAlbumSingles) {
+		const albumUrls = [];
+		for (let downloadObject of initialObjects) {
+			if (downloadObject.type === "playlist") {
+				for (let track of downloadObject.collection.tracks) {
+					albumUrls.push(track.album.link)
+				}
+			}
+		}
+		const uniqueUrls = [...new Set(albumUrls)];
+		downloadObjects = await initialLinks(
+			dz,
+			uniqueUrls,
+			settings,
+			spotifyPlugin
+		)
+	} else {
+		downloadObjects = initialObjects;
 	}
 
 	for (let downloadObject of downloadObjects) {

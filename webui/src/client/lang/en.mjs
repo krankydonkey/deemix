@@ -310,6 +310,7 @@ const en = {
 				e: "No, and don't look at the extensions",
 				l: "Overwrite only if upgrading bitrate (mp3 only)",
 			},
+			downloadAlbumSingles: "Download albums of playlist tracks",
 			fallbackBitrate: "Bitrate fallback",
 			fallbackSearch: "Search fallback",
 			fallbackISRC: "Fallback with ISRC search",
