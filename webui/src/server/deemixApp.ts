@@ -175,7 +175,7 @@ export class DeemixApp {
 		return result;
 	}
 
-	async addToQueue(
+	async getDownloadObjects(
 		dz: Deezer,
 		url: string[],
 		bitrate: number,
@@ -241,8 +241,30 @@ export class DeemixApp {
 			});
 		}
 
-		const slimmedObjects: Record<string, any>[] = [];
+		return downloadObjs;
+	}
 
+	async addToQueue(
+		dz: Deezer,
+		url: string[],
+		bitrate: number,
+		retry: boolean = false
+	) {
+		let downloadObjs = await this.getDownloadObjects(dz, url, bitrate, retry);
+		if (this.settings.downloadAlbumSingles) {
+			const albumUrls = [];
+			downloadObjs.forEach((downloadObj) => {
+				if (downloadObj.type === "playlist") {
+					let playlist = new Collection(downloadObj)
+					playlist.collection.tracks.forEach((track) => {
+						albumUrls.push(track.album.link)
+					});
+				}
+			});
+			downloadObjs = await this.getDownloadObjects(dz, albumUrls, bitrate, retry);
+		}
+
+		const slimmedObjects: Record<string, any>[] = [];
 		downloadObjs.forEach((downloadObj) => {
 			// Check if element is already in queue
 			if (Object.keys(this.queue).includes(downloadObj.uuid) && !retry) {

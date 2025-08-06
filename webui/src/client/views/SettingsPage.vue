@@ -992,13 +992,6 @@ function canDownload(bitrate: number) {
 				>
 
 					<label class="with-checkbox">
-						<input v-model="settings.downloadAlbumSingles" type="checkbox" />
-						<span class="checkbox-text">{{
-							t("settings.downloads.downloadAlbumSingles")
-						}}</span>
-					</label>
-
-					<label class="with-checkbox">
 						<input v-model="settings.fallbackBitrate" type="checkbox" />
 						<span class="checkbox-text">{{
 							t("settings.downloads.fallbackBitrate")
@@ -1057,6 +1050,13 @@ function canDownload(bitrate: number) {
 						<input v-model="settings.createM3U8File" type="checkbox" />
 						<span class="checkbox-text">{{
 							t("settings.downloads.createM3U8File")
+						}}</span>
+					</label>
+
+					<label class="with-checkbox">
+						<input v-model="settings.downloadAlbumSingles" type="checkbox" />
+						<span class="checkbox-text">{{
+							t("settings.downloads.downloadAlbumSingles")
 						}}</span>
 					</label>
 				</div>
